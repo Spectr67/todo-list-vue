@@ -3,11 +3,12 @@
     data() {
       return {
         todoText: '',
-
+        currentID: 0,
         todos: [
           {
             text: '',
             done: false,
+            // id :
           },
         ],
       }
@@ -16,9 +17,11 @@
     methods: {
       handleAddTask() {
         if (this.todoText === '') return
+        this.currentID = this.currentID + 1
         const todo = {
           text: this.todoText,
           done: false,
+          id: this.currentID,
         }
         this.todos.push(todo)
         this.todoText = ''
