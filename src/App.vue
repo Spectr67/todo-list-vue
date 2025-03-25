@@ -1,45 +1,37 @@
 <script>
-  export default {
-    data() {
-      return {
-        todoText: '',
-        currentID: 0,
-        todos: [
-          {
-            text: '',
-            done: false,
-            // id :
-          },
-        ],
+export default {
+  data() {
+    return {
+      todoText: '',
+      currentID: 0,
+      todos: [],
+    }
+  },
+
+  methods: {
+    handleAddTask() {
+      if (this.todoText === '') return
+      this.currentID = this.currentID + 1
+      const todo = {
+        text: this.todoText,
+        done: false,
+        id: this.currentID,
       }
+      this.todos.push(todo)
+      this.todoText = ''
     },
 
-    methods: {
-      handleAddTask() {
-        if (this.todoText === '') return
-        this.currentID = this.currentID + 1
-        const todo = {
-          text: this.todoText,
-          done: false,
-          id: this.currentID,
-        }
-        this.todos.push(todo)
-        this.todoText = ''
-      },
-
-      handleRemoveTask(todoText) {
-        this.todos = this.todos.filter(todo => todo.text !== todoText)
-      },
-      toggleTaskStatus(idx) {
-        this.todos[idx].done = !this.todos[idx].done
-      },
+    handleRemoveTaskById(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id)
     },
-  }
+  },
+}
 </script>
 
 <template>
   <div class="container">
     <h1>Список задач</h1>
+
     <div>
       <input
         v-bind:value="todoText"
@@ -48,21 +40,26 @@
         id="taskInput"
         placeholder="Введите задачу"
       />
+
       <button @click="handleAddTask" id="addTaskButton">Добавить задачу</button>
     </div>
+
     <ul id="taskList">
       <li
-        v-for="(todo, idx) of todos"
-        :key="idx"
+        v-for="todo of todos"
+        :key="todo.id"
         :class="{ completed: todo.done }"
       >
         <input
-          v-on:change="toggleTaskStatus(idx)"
+          v-bind:checked="todo.done"
+          v-on:change="todo.done = $event.target.checked"
           type="checkbox"
           class="checkbox"
         />
+
         <span class="task-text"> {{ todo.text }} </span>
-        <button @click="handleRemoveTask(todo.text)" class="deleteButton">
+
+        <button @click="handleRemoveTaskById(todo.id)" class="deleteButton">
           Удалить
         </button>
       </li>
@@ -71,92 +68,92 @@
 </template>
 
 <style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  .container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  h1 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  #taskInput {
-    width: calc(100% - 50px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  #addTaskButton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  #addTaskButton:hover {
-    background-color: #0056b3;
-  }
-  #taskList {
-    list-style-type: none;
-    padding: 0;
-  }
-  #taskList li {
-    background: #f9f9f9;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  .checkbox {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-    width: 20px;
-    height: 20px;
-  }
-  .task-text {
-    display: inline-block;
-    margin-left: 40px;
-    width: calc(100% - 110px);
-    vertical-align: middle;
-  }
-  .deleteButton {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-  }
-  .deleteButton:hover {
-    background-color: #c82333;
-  }
-  #taskList .completed {
-    background-color: #d4edda;
-    text-decoration: none;
-    color: #155724;
-  }
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+#taskInput {
+  width: calc(100% - 50px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+#addTaskButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#addTaskButton:hover {
+  background-color: #0056b3;
+}
+#taskList {
+  list-style-type: none;
+  padding: 0;
+}
+#taskList li {
+  background: #f9f9f9;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.checkbox {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  width: 20px;
+  height: 20px;
+}
+.task-text {
+  display: inline-block;
+  margin-left: 40px;
+  width: calc(100% - 110px);
+  vertical-align: middle;
+}
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+.deleteButton:hover {
+  background-color: #c82333;
+}
+#taskList .completed {
+  background-color: #d4edda;
+  text-decoration: none;
+  color: #155724;
+}
 </style>
