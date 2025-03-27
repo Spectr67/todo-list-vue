@@ -1,31 +1,18 @@
 <script>
-import TodoInputComponent from './todoinputComponent.vue'
+import TodoAdder from './TodoAdder.vue'
 
 export default {
-  components: { TodoInputComponent },
+  components: { TodoAdder },
+
   data() {
     return {
-      todoText: '',
-      currentID: 0,
-      todos: [],
+      todos: ['foo', 'bar', 'baz'],
     }
   },
 
   methods: {
-    handleAddTask() {
-      if (this.todoText === '') return
-      this.currentID = this.currentID + 1
-      const todo = {
-        text: this.todoText,
-        done: false,
-        id: this.currentID,
-      }
-      this.todos.push(todo)
-      this.todoText = ''
-    },
-
-    handleRemoveTaskById(id) {
-      this.todos = this.todos.filter(todo => todo.id !== id)
+    removeTodo(todo) {
+      this.todos = this.todos.filter(t => t !== todo)
     },
   },
 }
@@ -35,18 +22,13 @@ export default {
   <div class="container">
     <h1>Список задач</h1>
 
-    <!-- @input-change="handleInputChange" -->
-
-    <TodoInputComponent
-      :value="todoText"
-      @handle-add-task="console.log($event)"
-    ></TodoInputComponent>
+    <TodoAdder @task-added="todos.push($event)" />
 
     <ul id="taskList">
       <li
-        v-for="todo of todos"
-        :key="todo.id"
-        :class="{ completed: todo.done }"
+        v-for="(todo, idx) of todos"
+        :key="idx"
+        :class="{ completed: todo.startsWith('~') }"
       >
         <input
           v-bind:checked="todo.done"
@@ -55,9 +37,9 @@ export default {
           class="checkbox"
         />
 
-        <span class="task-text"> {{ todo.text }} </span>
+        <span class="task-text"> {{ todo }} </span>
 
-        <button @click="handleRemoveTaskById(todo.id)" class="deleteButton">
+        <button @click="removeTodo(todo.id)" class="deleteButton">
           Удалить
         </button>
       </li>
