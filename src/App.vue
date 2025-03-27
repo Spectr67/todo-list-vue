@@ -35,10 +35,12 @@ export default {
   <div class="container">
     <h1>Список задач</h1>
 
-    <TodoInputComponent>
-      :value="todoText" @input-change="handleInputChange"
-      @handleAddTask="handleAddTask"
-    </TodoInputComponent>
+    <!-- @input-change="handleInputChange" -->
+
+    <TodoInputComponent
+      :value="todoText"
+      @handle-add-task="console.log($event)"
+    ></TodoInputComponent>
 
     <ul id="taskList">
       <li

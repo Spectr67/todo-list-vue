@@ -1,7 +1,7 @@
 <script>
 export default {
   props: ['value'],
-  emits: ['input-change', 'handleAddTask'],
+  emits: ['input-change', 'handle-add-task'],
   methods: {
     handleInput(event) {
       this.$emit('input-change', event.target.value)
@@ -20,7 +20,7 @@ export default {
       @input="handleInput"
     />
 
-    <button @click="$emit('handleAddTask')" id="addTaskButton">
+    <button @click="$emit('handle-add-task', 'foobar')" id="addTaskButton">
       Добавить задачу
     </button>
   </div>
