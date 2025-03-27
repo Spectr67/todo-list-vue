@@ -1,5 +1,8 @@
 <script>
+import TodoInputComponent from './todoinputComponent.vue'
+
 export default {
+  components: { TodoInputComponent },
   data() {
     return {
       todoText: '',
@@ -32,17 +35,10 @@ export default {
   <div class="container">
     <h1>Список задач</h1>
 
-    <div>
-      <input
-        v-bind:value="todoText"
-        v-on:input="todoText = $event.target.value"
-        type="text"
-        id="taskInput"
-        placeholder="Введите задачу"
-      />
-
-      <button @click="handleAddTask" id="addTaskButton">Добавить задачу</button>
-    </div>
+    <TodoInputComponent>
+      :value="todoText" @input-change="handleInputChange"
+      @handleAddTask="handleAddTask"
+    </TodoInputComponent>
 
     <ul id="taskList">
       <li

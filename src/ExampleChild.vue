@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 export default {
   props: ['username'],
 
@@ -11,4 +11,4 @@ export default {
     <h2 v-on:click="$emit('username-updated', 'Alex')">Child</h2>
     <h3>{{ username }}</h3>
   </div>
-</template>
+</template> -->

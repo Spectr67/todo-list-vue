@@ -1,5 +1,5 @@
-<script>
-import ExampleChild from './ExampleChild.vue'
+<!-- <script>
+// import ExampleChild from './ExampleChild.vue'
 
 export default {
   components: { ExampleChild },
@@ -20,4 +20,4 @@ export default {
       v-on:username-updated="nick = $event"
     ></ExampleChild>
   </div>
-</template>
+</template> -->
