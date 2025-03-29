@@ -1,6 +1,6 @@
 <script>
 import TodoAdder from './TodoAdder.vue'
-import ULTodos from './ULTodo.vue'
+import ULTodos from './ULTodos.vue'
 
 export default {
   components: { TodoAdder, ULTodos },
@@ -9,12 +9,6 @@ export default {
     return {
       todos: ['foo', 'bar', 'baz'],
     }
-  },
-
-  methods: {
-    removeTodo(todo) {
-      this.todos = this.todos.filter(t => t !== todo)
-    },
   },
 }
 </script>
@@ -25,7 +19,7 @@ export default {
 
     <TodoAdder @todo-added="todos.push($event)" />
 
-    <ULTodos @remove-todo="removeTodo($event)" />
+    <ULTodos :todos="todos" />
   </div>
 </template>
 
