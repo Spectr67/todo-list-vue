@@ -1,8 +1,9 @@
 <script>
 import TodoAdder from './TodoAdder.vue'
+import ULTodos from './ULTodo.vue'
 
 export default {
-  components: { TodoAdder },
+  components: { TodoAdder, ULTodos },
 
   data() {
     return {
@@ -22,28 +23,9 @@ export default {
   <div class="container">
     <h1>Список задач</h1>
 
-    <TodoAdder @task-added="todos.push($event)" />
+    <TodoAdder @todo-added="todos.push($event)" />
 
-    <ul id="taskList">
-      <li
-        v-for="(todo, idx) of todos"
-        :key="idx"
-        :class="{ completed: todo.startsWith('~') }"
-      >
-        <input
-          v-bind:checked="todo.done"
-          v-on:change="todo.done = $event.target.checked"
-          type="checkbox"
-          class="checkbox"
-        />
-
-        <span class="task-text"> {{ todo }} </span>
-
-        <button @click="removeTodo(todo.id)" class="deleteButton">
-          Удалить
-        </button>
-      </li>
-    </ul>
+    <ULTodos @remove-todo="removeTodo($event)" />
   </div>
 </template>
 

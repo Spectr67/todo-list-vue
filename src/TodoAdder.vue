@@ -1,6 +1,6 @@
 <script>
 export default {
-  emits: ['task-added'],
+  emits: ['todo-added'],
 
   data() {
     return {
@@ -21,7 +21,7 @@ export default {
     />
 
     <button
-      @click="todo && $emit('task-added', todo), (todo = '')"
+      @click="todo && $emit('todo-added', todo), (todo = '')"
       id="addTaskButton"
     >
       Добавить задачу
