@@ -14,15 +14,14 @@ export default {
   <div>
     <input
       type="text"
-      id="taskInput"
+      id="todoInput"
       placeholder="Введите задачу"
-      :value="todo"
-      @input="todo = $event.target.value"
+      v-model="todo"
     />
 
     <button
       @click="todo && $emit('todo-added', todo), (todo = '')"
-      id="addTaskButton"
+      id="addTodoButton"
     >
       Добавить задачу
     </button>

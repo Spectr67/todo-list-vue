@@ -7,7 +7,7 @@ export default {
 
   data() {
     return {
-      todos: ['foo', 'bar', 'baz'],
+      todos: [],
     }
   },
 }
@@ -19,7 +19,7 @@ export default {
 
     <TodoAdder @todo-added="todos.push($event)" />
 
-    <ULTodos :todos="todos" />
+    <ULTodos v-model="todos" />
   </div>
 </template>
 
@@ -46,14 +46,14 @@ h1 {
   margin-bottom: 20px;
   color: #333;
 }
-#taskInput {
+#todoInput {
   width: calc(100% - 50px);
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-bottom: 10px;
 }
-#addTaskButton {
+#addTodoButton {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -62,14 +62,14 @@ h1 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-#addTaskButton:hover {
+#addTodoButton:hover {
   background-color: #0056b3;
 }
-#taskList {
+#todoList {
   list-style-type: none;
   padding: 0;
 }
-#taskList li {
+#todoList li {
   background: #f9f9f9;
   margin: 5px 0;
   padding: 10px;
@@ -85,13 +85,13 @@ h1 {
   width: 20px;
   height: 20px;
 }
-.task-text {
+.todo-text {
   display: inline-block;
   margin-left: 40px;
   width: calc(100% - 110px);
   vertical-align: middle;
 }
-.deleteButton {
+.removeButton {
   background-color: #dc3545;
   color: white;
   border: none;
@@ -104,10 +104,10 @@ h1 {
   transform: translateY(-50%);
   right: 10px;
 }
-.deleteButton:hover {
+.removeButton:hover {
   background-color: #c82333;
 }
-#taskList .completed {
+#todoList .completed {
   background-color: #d4edda;
   text-decoration: none;
   color: #155724;

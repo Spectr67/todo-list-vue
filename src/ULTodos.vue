@@ -4,30 +4,32 @@ import LITodo from './LITodo.vue'
 export default {
   components: { LITodo },
 
-  props: ['todos'],
+  props: ['modelValue'],
 
-  emits: ['remove-todo', 'update-todo'],
-
-  methods: {
-    updateTodo(newTodo, oldTodo) {
-      this.todos = this.todos.map(t => (t === oldTodo ? newTodo : t))
-    },
-
-    removeTodo(todo) {
-      this.todos = this.todos.filter(t => t !== todo)
-    },
-  },
+  emits: ['update:model-value'],
 }
 </script>
 
 <template>
-  <ul id="taskList">
+  <ul id="todoList">
     <LITodo
-      v-for="(todo, idx) of todos"
+      v-for="(todo, idx) of modelValue"
       :key="idx"
       :todo="todo"
-      @update-todo="updateTodo($event, todo)"
-      @remove-todo="removeTodo($event)"
+      @update-todo="
+        ({ oldTodo, newTodo }) =>
+          $emit(
+            'update:model-value',
+            modelValue.map(todo => (todo === oldTodo ? newTodo : todo))
+          )
+      "
+      @remove-todo="
+        $emit(
+          'update:model-value',
+          modelValue.filter(t => t !== todo)
+        )
+      "
+      @update-todo-text="update - todo - text"
     />
   </ul>
 </template>
