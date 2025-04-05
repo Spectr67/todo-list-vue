@@ -1,8 +1,8 @@
 <script>
-import LITodo from './LITodo.vue'
+import TodoItem from './TodoItem.vue'
 
 export default {
-  components: { LITodo },
+  components: { TodoItem },
 
   props: ['modelValue'],
 
@@ -12,16 +12,15 @@ export default {
 
 <template>
   <ul id="todoList">
-    <LITodo
+    <TodoItem
       v-for="(todo, idx) of modelValue"
       :key="idx"
       :todo="todo"
       @update-todo="
-        ({ oldTodo, newTodo }) =>
-          $emit(
-            'update:model-value',
-            modelValue.map(todo => (todo === oldTodo ? newTodo : todo))
-          )
+        $emit(
+          'update:model-value',
+          modelValue.map(t => (t === todo ? $event : t))
+        )
       "
       @remove-todo="
         $emit(
@@ -29,7 +28,6 @@ export default {
           modelValue.filter(t => t !== todo)
         )
       "
-      @update-todo-text="update - todo - text"
     />
   </ul>
 </template>
