@@ -4,7 +4,10 @@ export default {
 
   data() {
     return {
-      todo: '',
+      todo: {
+        text: '',
+        completed: false,
+      },
     }
   },
 }
@@ -16,11 +19,11 @@ export default {
       type="text"
       id="todoInput"
       placeholder="Введите задачу"
-      v-model="todo"
+      v-model="todo.text"
     />
 
     <button
-      @click="todo && $emit('todo-added', todo), (todo = '')"
+      @click="todo && $emit('todo-added', todo.text), (todo.text = '')"
       id="addTodoButton"
     >
       Добавить задачу

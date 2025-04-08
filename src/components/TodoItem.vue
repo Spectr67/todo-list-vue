@@ -13,18 +13,13 @@ export default {
 </script>
 
 <template>
-  <li :class="{ completed: todo.startsWith('~') }">
+  <li :class="{ completed: todo.completed }">
     <input
       type="checkbox"
       class="checkbox"
-      :checked="todo.startsWith('~')"
+      :checked="todo.completed"
       @change="
-        $emit(
-          'update-todo',
-          $event.target.checked
-            ? '~' + todo.replaceAll('~', '')
-            : todo.replaceAll('~', '')
-        )
+        $emit('update-todo', { ...todo, completed: $event.target.checked })
       "
     />
 
@@ -36,7 +31,7 @@ export default {
     />
 
     <span v-else class="todo-text" @dblclick="isEdited = !isEdited">
-      {{ todo.replaceAll('~', '') }}
+      {{ todo }}
     </span>
 
     <button @click="$emit('remove-todo', todo)" class="removeButton">
