@@ -14,6 +14,7 @@ export default {
 </script>
 
 <template>
+  {{ todos }}
   <div class="container">
     <h1>Список задач</h1>
 

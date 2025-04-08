@@ -1,14 +1,25 @@
 <script>
+const initTodo = () => ({
+  text: '',
+  completed: false,
+})
+
 export default {
   emits: ['todo-added'],
 
   data() {
     return {
-      todo: {
-        text: '',
-        completed: false,
-      },
+      todo: initTodo(),
     }
+  },
+
+  methods: {
+    handleClick() {
+      if (this.todo.text) {
+        this.$emit('todo-added', { ...this.todo })
+        this.todo = initTodo()
+      }
+    },
   },
 }
 </script>
@@ -22,11 +33,6 @@ export default {
       v-model="todo.text"
     />
 
-    <button
-      @click="todo && $emit('todo-added', todo.text), (todo.text = '')"
-      id="addTodoButton"
-    >
-      Добавить задачу
-    </button>
+    <button @click="handleClick" id="addTodoButton">Добавить задачу</button>
   </div>
 </template>
